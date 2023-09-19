@@ -1,11 +1,37 @@
 <?php
+
 include_once "views/top.php";
 include_once "views/nav.php";
+include_once "sysgam/membership.php";
 if (isset($_POST['submit'])) {
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    echo $email . "-" . $password;
+
+    $ret = loginUser($email, $password);
+    $message = "";
+    switch ($ret) {
+        case "Login Success":
+            $message = "Login Success";
+            if (getSession('username') === "hxuzzy" && $email === "hxuzzy@gmail.com") {
+                header("Location:admin.php");
+            } else {
+                header("Location:index.php");
+            }
+            break;
+        case "Login Fail":
+            $message = "Login Fail";
+            break;
+        case "Auth Fail":
+            $message = "User Name and password not in format";
+            break;
+        default:;
+            break;
+    }
+    echo "<div class = 'container my-5'><div class='alert alert-warning alert-dismissible fade show' role='alert'>
+  " . $message . "
+  <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+</div></div>";
 }
 ?>
 <div class="container my-3 table-bordered-2">
@@ -22,7 +48,7 @@ if (isset($_POST['submit'])) {
             </div>
             <p></p>
             <div class="row no-gutters justify-content-end">
-                <button class="btn btn-info" style="width:fit-content" name="submit" type="submit" value="submit">Login</button>
+                <button class="btn btn-info" style="color:aliceblue;width:fit-content" name="submit" type="submit" value="submit">Login</button>
             </div>
 
         </form>

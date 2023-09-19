@@ -1,3 +1,8 @@
+<?php
+session_start();
+include_once "sysgam/Mysession.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

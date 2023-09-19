@@ -1,13 +1,45 @@
 <?php
 include_once "views/top.php";
 include_once "views/nav.php";
+require_once  "sysgam/membership.php";
+
 if (isset($_POST['submit'])) {
     $username = $_POST["username"];
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    echo $username . "-" . $email . "-" . $password;
+
+    $ret = registerUser($username, $email, $password);
+    $message = "";
+    switch ($ret) {
+        case "Register Success":
+            $message = "Register Success";
+            setSession("username", $username);
+            setSession("email", $email);
+            if ($username == "hxuzzy" && $email == "hxuzzy@gmail.com") {
+                header("Location:admin.php");
+            } else {
+                header("Location:index.php");
+            }
+            break;
+        case "Email is already used":
+            $message = "Email is already used";
+            break;
+        case "Register Fail":
+            $message = "Register Fail";
+            break;
+        case "Fail":
+            $message = "Authentication Fail";
+            break;
+        default:;
+            break;
+    }
+    echo "<div class = 'container my-5'><div class='alert alert-warning alert-dismissible fade show' role='alert'>
+  " . $message . "
+  <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+</div></div>";
 }
+
 ?>
 <div class="container my-3 table-bordered-2">
     <div class="col-md-8 offset-md-2 table-bordered-2 p-5">
@@ -27,7 +59,7 @@ if (isset($_POST['submit'])) {
             </div>
             <p></p>
             <div class="row no-gutters justify-content-end">
-                <button class="btn btn-info" style="width:fit-content" name="submit" type="submit" value="submit">Login</button>
+                <button class="btn btn-info" style="color:aliceblue;width:fit-content" name="submit" type="submit" value="submit">Register</button>
             </div>
 
         </form>

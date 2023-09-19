@@ -22,15 +22,28 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white english" href="#" role="button" id="MyDD" data-bs-toggle="dropdown" aria-expanded="false">
-                            Member
+                            <?php
+                            if (checkSession("username")) {
+                                echo getSession("username");
+                            } else {
+                                echo "member";
+                            }
+                            ?>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="register.php">Register</a></li>
-                            <li><a class="dropdown-item" href="login.php">Login</a></li>
+                            <?php
+                            if (checkSession("username")) {
+                                echo  "<li><a class='dropdown-item' href='logout.php'>Logout</a></li>";
+                            } else {
+                                echo "<li><a class='dropdown-item' href='register.php'>Register</a></li>
+                            <li><a class='dropdown-item' href='login.php'>Login</a></li>
                             <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                                <hr class='dropdown-divider'>
+                            </li>";
+                            }
+                            ?>
+
+
                         </ul>
                     </li>
 
