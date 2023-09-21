@@ -9,16 +9,16 @@
                 <ul class="navbar-nav  mb-2 mb-lg-0" style="margin-left:auto
                 ;" id="gg">
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">NEWS</a>
+                        <a class="nav-link text-white" href="index.php">NEWS</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white english" aria-disabled="true">Politic</a>
+                        <a class="nav-link text-white english" aria-disabled="true" href="filterpost.php?sid=1">Politic</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white english" aria-disabled="true">Wars</a>
+                        <a class="nav-link text-white english" aria-disabled="true" href="filterpost.php?sid=2">Wars</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white english" aria-disabled="true">IT NEWS</a>
+                        <a class="nav-link text-white english" aria-disabled="true" href="filterpost.php?sid=3">IT NEWS</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white english" href="#" role="button" id="MyDD" data-bs-toggle="dropdown" aria-expanded="false">

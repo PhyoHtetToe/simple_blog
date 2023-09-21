@@ -18,8 +18,8 @@
 
 <aside class="col-md-3">
     <ul class="list-group mylistgroup">
-        <li class="list-group-item"><a href="#">A</a></li>
-        <li class="list-group-item"><a href="#">B</a></li>
+        <li class="list-group-item"><a href="admin.php">Post Insert</a></li>
+        <li class="list-group-item"><a href="showallpost.php">Show all post</a></li>
         <li class="list-group-item"><a href="#">C</a></li>
         <li class="list-group-item"><a href="#">D</a></li>
         <li class="list-group-item"><a href="#">E</a></li>

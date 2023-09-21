@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once "sysgam/Mysession.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -15,3 +15,9 @@ include_once "sysgam/Mysession.php";
 </head>
 
 <body>
+    <?php
+    include_once "sysgam/Mysession.php";
+    include_once "sysgam/postgen.php";
+    include_once "views/nav.php";
+    include_once "sysgam/membership.php";
+    ?>

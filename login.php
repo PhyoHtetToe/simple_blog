@@ -1,14 +1,13 @@
 <?php
 
 include_once "views/top.php";
-include_once "views/nav.php";
-include_once "sysgam/membership.php";
+
 if (isset($_POST['submit'])) {
     $email = $_POST["email"];
     $password = $_POST["password"];
 
 
-    $ret = loginUser($email, $password);
+    $ret = userLogin($email, $password);
     $message = "";
     switch ($ret) {
         case "Login Success":

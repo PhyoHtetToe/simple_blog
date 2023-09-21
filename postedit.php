@@ -1,41 +1,41 @@
 <?php
 include_once "views/top.php";
-
 include_once "views/header.php";
 
-
-if (checkSession("username")) {
-    if (getSession("username") != "hxuzzy") {
-        header("Location:index.php");
+$pid = "";
+if (isset($_GET["pid"])) {
+    $pid = $_GET["pid"];
+    $ppid = $pid;
+    $result = getSinglepost($pid);
+    $posts = [""];
+    foreach ($result as $item) {
+        $posts["title"] = $item["title"];
+        $posts["writer"] = $item["writer"];
+        $posts["imglink"] = $item["imglink"];
+        $posts["content"] = $item["content"];
     }
-} else {
-    header("Location:index.php");
 }
-if (isset($_POST['submit'])) {
-    $postitle = $_POST['postitle'];
-    $postype = $_POST['postype'];
-    $postwriter = $_POST['postwriter'];
-    $postcontent = $_POST['postcontent'];
+
+if (isset($_POST["submit"])) {
+    $file = $_FILES["file"];
+    $imgname = "";
+
+    if ($_FILES["file"]["name"] != null) {
+        $imgname = mt_rand(time(), time()) . "_" . $_FILES["file"]["name"];
+        move_uploaded_file($_FILES["file"]["tmp_name"], "assets/uploads/" . $imgname);
+    } else {
+        $imgname = $_POST["oldimg"];
+    }
+    $title = $_POST["postitle"];
+    $postype = $_POST["postype"];
+    $postwriter = $_POST["postwriter"];
+    $postcontent = $_POST["postcontent"];
+    $imglink =  $imgname;
+    $pid = $_GET["pid"];
     $subject = $_POST['subject'];
 
-    $imglink = mt_rand(time(), time()) . "_" . $_FILES["file"]["name"];
-    move_uploaded_file($_FILES['file']['tmp_name'], 'assets/uploads/' . $imglink);
-
-    $bol = insertPost($postitle, $postype, $postwriter, $postcontent, $imglink, $subject);
-
-    if ($bol) {
-        echo "<div class = 'container my-5'><div class='alert alert-warning alert-dismissible fade show' role='alert'>
-   Post Successfully Uploaded  
-  <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-</div></div>";
-    } else {
-        echo "<div class = 'container my-5'><div class='alert alert-warning alert-dismissible fade show' role='alert'>
-  Post Upload Fail
-  <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-</div></div>";
-    }
+    updatePost($title, $postype, $postwriter, $postcontent, $imglink, $pid, $subject);
 }
-
 ?>
 <div class="container my-3">
     <div class="row">
@@ -43,11 +43,11 @@ if (isset($_POST['submit'])) {
         include_once "views/sideber.php";
         ?>
         <section class="col-md-9">
-            <form method="post" action="admin.php" enctype="multipart/form-data" class="mb-5 border p-5 " style="background-color:#ddd;">
-                <h3 class="english text-center">Post Insert Form</h3>
+            <form method="post" action="" enctype="multipart/form-data" class="mb-5 border p-5 " style="background-color:#ddd;">
+                <h3 class="english text-center">Post Edit Here</h3>
                 <div class="form-group">
                     <label for="postitle" class="english">Post Title</label>
-                    <input type="text" class="form-control english" id="postitle" name="postitle">
+                    <input type="text" class="form-control english" id="postitle" name="postitle" value="<?php echo $posts["title"]; ?>">
                 </div>
 
                 <div class=" form-group">
@@ -70,25 +70,26 @@ if (isset($_POST['submit'])) {
                     </select>
                 </div>
 
-
                 <div class="form-group">
                     <label for="postwriter" class="english">Post Writer</label>
-                    <input type="text" class="form-control english" id="postwriter" name="postwriter">
+                    <input type="text" class="form-control english" id="postwriter" name="postwriter" value="<?php echo $posts["writer"]; ?>">
                 </div>
 
                 <div class="form-group" style="display:flex; width:100%;">
                     <input type="file" name="file" class="form-control" id="file" multiple>
                     <label class="input-group-text" for="file">Upload</label>
+                    <input type="hidden" name="oldimg" value="<?php echo $posts["imglink"]; ?>">
                 </div>
 
                 <div class="form-group">
-                    <label for="postcontent" class="english">Post Type</label>
-                    <textarea type="text" class="form-control" id="postcontent" rows="7" name="postcontent"></textarea>
+                    <label for="postcontent" class="english">Post Content</label>
+                    <textarea type="text" class="form-control" id="postcontent" rows="7" name="postcontent"><?php echo $posts["content"]; ?></textarea>
                 </div>
                 <div class="postbutton" style="width:fit-content; float:right;">
                     <button class="btn btn-outline-primary">Cancel</button>
-                    <button type="submit" name="submit" class="btn btn-primary">Post</button>
+                    <button type="submit" name="submit" class="btn btn-primary">Update</button>
                 </div>
+                <img src="assets/uploads/<?php echo $posts["imglink"]; ?>" alt="" class="img-fluid">
             </form>
 
         </section>

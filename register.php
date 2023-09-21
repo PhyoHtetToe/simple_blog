@@ -1,7 +1,6 @@
 <?php
 include_once "views/top.php";
-include_once "views/nav.php";
-require_once  "sysgam/membership.php";
+
 
 if (isset($_POST['submit'])) {
     $username = $_POST["username"];
